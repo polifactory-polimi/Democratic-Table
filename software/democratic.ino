@@ -16,7 +16,6 @@
  *
  */
 
-
 #include <Adafruit_MPR121.h>
 #include <RGBFader.h>
 
@@ -29,6 +28,13 @@ const RGB rgb_pins = { .red = red_pin, .green = green_pin, .blue = blue_pin };
 
 Adafruit_MPR121 t = Adafruit_MPR121();
 RGBFader *f;
+
+void setup_brightness(){
+  if (f->getBrightnessTarget() == 255)
+    f->setBrightnessCycle(255, 0, brightness_cycles);
+  else
+    f->setBrightnessCycle(0, 255, brightness_cycles);
+}
 
 void setup(){
   Serial.begin(9600);
@@ -50,16 +56,20 @@ void loop(){
       break;
 
     case 1<<BRIGHTNESS_TOUCH_PIN:
-      if (f->getBrightnessTarget() == 255)
-        f->setBrightnessCycle(255, 0, brightness_cycles);
-      else
-        f->setBrightnessCycle(0, 255, brightness_cycles);
+      setup_brightness();
 
       f->freezeBrightness = false;
       f->freezeColor = true;
       break;
 
-    case 0:
+    case 1<<CYCLE_TOUCH_PIN | 1<<BRIGHTNESS_TOUCH_PIN:
+      setup_brightness();
+      
+      f->freezeBrightness=false;
+      f->freezeColor=false;
+      break;
+
+    default:
       f->freezeBrightness = true;
       f->freezeColor = true;
       break;
