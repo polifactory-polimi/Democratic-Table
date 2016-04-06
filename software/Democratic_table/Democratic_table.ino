@@ -17,7 +17,7 @@
  */
 
 #include <Adafruit_MPR121.h>
-#include <RGBFader.h>
+#include "RGBFader/RGBFader.h"
 
 #define CYCLE_TOUCH_PIN       0
 #define BRIGHTNESS_TOUCH_PIN  7

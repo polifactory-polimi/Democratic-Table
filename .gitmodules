@@ -1,0 +1,3 @@
+[submodule "software/Democratic_table/RGBFader"]
+	path = software/Democratic_table/RGBFader
+	url = https://github.com/polifactory-polimi/RGBFader.git
